@@ -30,9 +30,6 @@ import org.apache.spark.sql.functions.{lit, size, col, collect_list, explode, su
  * ...
  * where URL and their neighbors are separated by a semi-colon.
  *
- * This is an example implementation for learning how to use Spark. For more conventional use,
- * please refer to org.apache.spark.graphx.lib.PageRank
- *
  * This code is the modified version of 
  * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/SparkPageRank.scala
  * 
