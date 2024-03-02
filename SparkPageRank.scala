@@ -23,7 +23,7 @@ import org.apache.spark.sql.functions.{lit, size, col, collect_list, explode, su
 
 /**
  * Computes the PageRank of URLs from an input file. Input file should
- * be in format of:
+ * be in the format of:
  * URL;neighbor URL
  * URL;neighbor URL
  * URL;neighbor URL
@@ -34,7 +34,7 @@ import org.apache.spark.sql.functions.{lit, size, col, collect_list, explode, su
  * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/SparkPageRank.scala
  * 
  * This modified code has the same execution logic but is modified to take advantage of the Dataframe API.
- * Using the DataFrame API has several benefits which was outlined in the primer.
+ * Using the DataFrame API has several benefits which were outlined in the primer.
  * 
  * Example Usage:
  * {{{
