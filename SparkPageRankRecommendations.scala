@@ -12,7 +12,7 @@ Note: These resources are not exhaustive and you must treat them as a starting p
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types.{StructType, StructField, LongType, DoubleType}
 import org.apache.spark.sql.Row
-import org.apache.spark.sql.functions.{lit, size, col, collect_list, array, explode_outer, concat, when, coalesce, max, sum, greatest}
+import org.apache.spark.sql.functions.{lit, size, col, collect_list, array, posexplode_outer, concat, when, coalesce, max, sum, greatest}
 import java.io.PrintWriter
 
 object PageRank {
@@ -122,9 +122,9 @@ object PageRank {
         // add user to list of followees to generate self-contribution vector
         // * keep follower-less nodes from disappearing in PageRank
         // * include current max in comparison for recommendations
-        .withColumn("followee", explode_outer(concat($"followees", array($"user"))))
-        .withColumn("contrib", when($"user" !== $"followee", joined("rank") / joined("numfollowing"))
-          .otherwise(0)) // zero rank contrib in self-contrib case
+        .select(col("*"), posexplode_outer(concat($"followees", array($"user"))).as(Seq("followeePos", "followee")))
+        .withColumn("contrib", when(col("followeePos") < col("numfollowing"),col("rank") / col("numfollowing"))
+        .otherwise(lit(0.0)))
         
         // you may comment the next three lines while solving Task 2.1
         // TODO: Task 2.2 zero out recommendation for topic if non-interest for sender
